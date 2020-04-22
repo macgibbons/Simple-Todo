@@ -12,7 +12,7 @@ namespace SimpleToDo.Models
 
         public int TodoStatusId { get; set; }
         public TodoStatus TodoStatus { get; set; }
-        public int ApplicationUserId { get; set; }
+        public string ApplicationUserId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
     }
 }
