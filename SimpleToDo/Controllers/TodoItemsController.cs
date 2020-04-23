@@ -36,6 +36,7 @@ namespace SimpleToDo.Controllers
             // filtering items so we only see our own and not other users
             var items = await _context.TodoItem
                 .Where(ti => ti.ApplicationUserId == user.Id)
+                .Include(ti => ti.TodoStatus)
                 .ToListAsync();
 
             return View(items);
@@ -90,9 +91,31 @@ namespace SimpleToDo.Controllers
         }
 
         // GET: TodoItems/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            return View();
+            var item = await _context.TodoItem.FirstOrDefaultAsync(ti => ti.Id == id);
+            var loggedInUser = await GetCurrentUserAsync();
+
+
+            var TodoStatuses = await _context.TodoStatus
+                .Select(td => new SelectListItem() { Text = td.Title, Value = td.Id.ToString() })
+                .ToListAsync();
+
+            var viewModel = new TodoItemStatusViewModel()
+            {
+                Id = id,
+                Title = item.Title,
+                TodoStatusId = item.TodoStatusId,
+                StatusOptions = TodoStatuses,
+
+            };
+
+            if (item.ApplicationUserId != loggedInUser.Id)
+            {
+                return NotFound();
+            }
+
+            return View(viewModel);
         }
 
         // POST: TodoItems/Edit/5
