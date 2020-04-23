@@ -121,11 +121,22 @@ namespace SimpleToDo.Controllers
         // POST: TodoItems/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Edit(int id, TodoItemStatusViewModel  TodoItemViewModel)
         {
             try
             {
-                // TODO: Add update logic here
+                var todoItem = new TodoItem()
+                {
+                    Id = TodoItemViewModel.Id,
+                    Title = TodoItemViewModel.Title,
+                    TodoStatusId = TodoItemViewModel.TodoStatusId
+                };
+
+                var user = await GetCurrentUserAsync();
+                todoItem.ApplicationUserId = user.Id;
+
+                _context.TodoItem.Update(todoItem);
+                await _context.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
             }
