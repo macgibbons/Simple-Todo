@@ -9,20 +9,17 @@ namespace SimpleToDo.Models.ViewModels
 {
     public class TodoItemStatusViewModel
     {
-        public int TodoItemId { get; set; }
+        public int Id { get; set; }
 
-        [Display(Name = "Title")]
-        [Required]
+      
         public string Title { get; set; }
 
 
-        [Display(Name = "Status")]
-        [Required]
         public int TodoStatusId { get; set; }
 
-        [Display(Name = "Status")]
-        [Required]
-        public string Status { get; set; }
+
+        public string ApplicationUserId { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
         public List<SelectListItem> StatusOptions { get; set; }
     }
 }

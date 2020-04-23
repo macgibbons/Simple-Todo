@@ -5,9 +5,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SimpleToDo.Data;
 using SimpleToDo.Models;
+using SimpleToDo.Models.ViewModels;
 
 namespace SimpleToDo.Controllers
 {
@@ -16,6 +18,7 @@ namespace SimpleToDo.Controllers
 
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
+        
 
         public TodoItemsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
@@ -25,9 +28,11 @@ namespace SimpleToDo.Controllers
         // GET: TodoItems
         public async Task<ActionResult> Index()
         {
+
+            
             // getting the current user
             var user = await GetCurrentUserAsync();
-
+            
             // filtering items so we only see our own and not other users
             var items = await _context.TodoItem
                 .Where(ti => ti.ApplicationUserId == user.Id)
@@ -43,18 +48,33 @@ namespace SimpleToDo.Controllers
         }
 
         // GET: TodoItems/Create
-        public ActionResult Create()
+        public async  Task<ActionResult> Create()
         {
-            return View();
+            var ToDoStatuses = await _context.TodoStatus
+                 .Select(td => new SelectListItem() { Text = td.Title, Value = td.Id.ToString() })
+                 .ToListAsync();
+
+            var viewModel = new TodoItemStatusViewModel();
+
+            viewModel.StatusOptions = ToDoStatuses;
+
+            return View(viewModel);
         }
 
         // POST: TodoItems/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(TodoItem todoItem)
+        public async Task<ActionResult> Create(TodoItemStatusViewModel todoViewItem)
         {
             try
             {
+                var todoItem = new TodoItem
+                {
+                    Title = todoViewItem.Title,
+                    TodoStatusId = todoViewItem.TodoStatusId
+
+                };
+
                 var user = await GetCurrentUserAsync();
                 todoItem.ApplicationUserId = user.Id;
 
@@ -117,6 +137,6 @@ namespace SimpleToDo.Controllers
 
         private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
-
+       
     }
 }

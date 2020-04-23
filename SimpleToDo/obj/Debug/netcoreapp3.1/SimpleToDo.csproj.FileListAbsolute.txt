@@ -160,3 +160,4 @@ C:\Users\Mac Gibbons\source\repos\SimpleToDo\SimpleToDo\obj\Debug\netcoreapp3.1\
 C:\Users\Mac Gibbons\source\repos\SimpleToDo\SimpleToDo\obj\Debug\netcoreapp3.1\SimpleToDo.dll
 C:\Users\Mac Gibbons\source\repos\SimpleToDo\SimpleToDo\obj\Debug\netcoreapp3.1\SimpleToDo.pdb
 C:\Users\Mac Gibbons\source\repos\SimpleToDo\SimpleToDo\obj\Debug\netcoreapp3.1\SimpleToDo.genruntimeconfig.cache
+C:\Users\Mac Gibbons\source\repos\SimpleToDo\SimpleToDo\obj\Debug\netcoreapp3.1\SimpleToDo.csprojAssemblyReference.cache
