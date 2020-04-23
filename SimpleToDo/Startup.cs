@@ -63,7 +63,7 @@ namespace SimpleToDo
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=TodoItems}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
         }

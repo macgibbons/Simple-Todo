@@ -26,20 +26,56 @@ namespace SimpleToDo.Controllers
             _userManager = userManager;
         }
         // GET: TodoItems
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(string filter)
         {
 
             
             // getting the current user
             var user = await GetCurrentUserAsync();
             
-            // filtering items so we only see our own and not other users
-            var items = await _context.TodoItem
-                .Where(ti => ti.ApplicationUserId == user.Id)
-                .Include(ti => ti.TodoStatus)
-                .ToListAsync();
 
-            return View(items);
+            // filtering items so we only see our own and not other users
+            if (filter == "To Do")
+            {
+                var items = await _context.TodoItem
+                     .Where(ti => ti.ApplicationUserId == user.Id)
+                     .Where(ti => ti.TodoStatusId == 1)
+                     .Include(ti => ti.TodoStatus)
+                     .ToListAsync();
+
+                return View(items);
+
+            }
+            else if (filter == "In Progress")
+            {
+                var items = await _context.TodoItem
+               .Where(ti => ti.ApplicationUserId == user.Id)
+               .Where(ti => ti.TodoStatusId == 2)
+               .Include(ti => ti.TodoStatus)
+               .ToListAsync();
+
+                return View(items);
+            }
+            else if (filter == "Done")
+            {
+                var items = await _context.TodoItem
+            .Where(ti => ti.ApplicationUserId == user.Id)
+            .Where(ti => ti.TodoStatusId == 3)
+            .Include(ti => ti.TodoStatus)
+            .ToListAsync();
+
+                return View(items);
+            }
+            else
+            {
+                var items = await _context.TodoItem
+                    .Where(ti => ti.ApplicationUserId == user.Id)
+                    .Include(ti => ti.TodoStatus)
+                    .ToListAsync();
+
+                return View(items);
+
+            }
         }
 
         // GET: TodoItems/Details/5
@@ -147,19 +183,22 @@ namespace SimpleToDo.Controllers
         }
 
         // GET: TodoItems/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            return View();
+            var item = await _context.TodoItem.Include(i => i.TodoStatus).FirstOrDefaultAsync(i => i.Id == id);
+
+            return View(item);
         }
 
         // POST: TodoItems/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<ActionResult> Delete(int id, TodoItem todoItem)
         {
             try
             {
-                // TODO: Add delete logic here
+                _context.TodoItem.Remove(todoItem);
+                await _context.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
             }

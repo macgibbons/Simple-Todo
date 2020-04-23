@@ -9,33 +9,49 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link bg-light active" asp-action="Index" asp-route-filter="To Do">To Do</a>
+
+    </li>
+    <li class="nav-item">
+
+        <a  class="nav-link " asp-action="Index" asp-route-filter="In Progress">In Progress </a>
+    </li>
+    <li class="nav-item">
+        <a  class="nav-link " asp-action="Index" asp-route-filter="Done">Done</a>
+
+    </li>
+
+</ul>
+    <table class="table">
     <thead>
         <tr>
             <th>
-               Task
+                Task
             </th>
             <th>
-               Status
+                Status
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TodoStatus.Title)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new {  id=item.Id }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TodoStatus.Title)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

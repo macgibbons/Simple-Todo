@@ -162,3 +162,4 @@ C:\Users\Mac Gibbons\source\repos\SimpleToDo\SimpleToDo\obj\Debug\netcoreapp3.1\
 C:\Users\Mac Gibbons\source\repos\SimpleToDo\SimpleToDo\obj\Debug\netcoreapp3.1\SimpleToDo.genruntimeconfig.cache
 C:\Users\Mac Gibbons\source\repos\SimpleToDo\SimpleToDo\obj\Debug\netcoreapp3.1\SimpleToDo.csprojAssemblyReference.cache
 C:\Users\Mac Gibbons\source\repos\SimpleToDo\SimpleToDo\obj\Debug\netcoreapp3.1\Razor\Views\TodoItems\Edit.cshtml.g.cs
+C:\Users\Mac Gibbons\source\repos\SimpleToDo\SimpleToDo\obj\Debug\netcoreapp3.1\Razor\Views\TodoItems\Delete.cshtml.g.cs
